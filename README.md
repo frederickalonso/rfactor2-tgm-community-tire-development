@@ -1,4 +1,4 @@
-# rFactor 2 Tire Development Knowledge Base
+# rFactor 2 Tire Development Knowledge Base by Frederick Alonso
 
 ## Overview
 This knowledge base contains professional tire development methodology, parameter relationships, and technical insights developed through collaboration with racing teams and extensive testing. All information respects NDA boundaries while sharing validated physics principles.
