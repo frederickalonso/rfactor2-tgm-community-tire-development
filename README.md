@@ -1,4 +1,8 @@
 # rFactor 2 Tire Development Knowledge Base by Frederick Alonso
+## Copyrights and usage of the code
+https://docs.studio-397.com/display/DG/Tyre+Database
+Parts of this mod were taken from rFactor 2 and are used with the explicit permission of Studio 397. These parts remain the property of Studio 397 BV and may not be re-used for any purpose, including other mods without the explicit, written permission of Studio 397 BV. 
+
 
 ## Overview
 This knowledge base contains professional tire development methodology, parameter relationships, and technical insights developed through collaboration with racing teams and extensive testing. All information respects NDA boundaries while sharing validated physics principles.
