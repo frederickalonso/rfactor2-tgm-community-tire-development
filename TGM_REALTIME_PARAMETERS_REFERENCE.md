@@ -36,9 +36,14 @@ The [Realtime] section of a TGM file contains parameters that act as **scaling f
 
 **Format:** `StaticBaseCoefficient=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Minimum:** 2.5 (low grip, slippery tire)
+- **Typical:** 3.5 - 4.0 (standard racing tire)
+- **Maximum:** 4.5 (very high grip, may overheat)
+
+**Example:**
 ```
-StaticBaseCoefficient=3.75  // Reduced by ~6% to match target friction coefficient
+StaticBaseCoefficient=3.75
 ```
 
 **Thesis Information:**
@@ -47,15 +52,12 @@ StaticBaseCoefficient=3.75  // Reduced by ~6% to match target friction coefficie
 - Works in combination with `SlidingBaseCoefficient` to define the friction envelope
 
 **Tuning Guidelines:**
-- **Increase** for more grip (higher friction coefficient)
-- **Decrease** for less grip (lower friction coefficient)
-- Typical range: 2.5 - 4.5
-- Changes of ±5-10% are common for fine-tuning
-- Higher values = more grip but can lead to overheating if too high
-
-**Real-World Impact:**
-- Higher values: Better cornering grip, shorter braking distances, more responsive steering
-- Lower values: More sliding, longer braking distances, less responsive steering
+- **Range:** 2.5 - 4.5
+- **Typical adjustments:** ±5-10% for fine-tuning
+- **Increase:** More grip, better cornering, shorter braking distances, more responsive steering
+  - **Effect:** Higher friction coefficient, tire grips better but may overheat if too high
+- **Decrease:** Less grip, more sliding, longer braking distances, less responsive steering
+  - **Effect:** Lower friction coefficient, more progressive breakaway, less prone to overheating
 - Must be balanced with thermal parameters to avoid overheating
 
 ---
@@ -66,9 +68,14 @@ StaticBaseCoefficient=3.75  // Reduced by ~6% to match target friction coefficie
 
 **Format:** `SlidingBaseCoefficient=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Minimum:** 1.5 (low sliding grip, easy to break loose)
+- **Typical:** 2.3 - 2.8 (standard racing tire, ~65-70% of StaticBaseCoefficient)
+- **Maximum:** 3.5 (high sliding grip, hard to break loose)
+
+**Example:**
 ```
-SlidingBaseCoefficient=2.68  // Reduced by ~5.5% to maintain balance with StaticBaseCoefficient
+SlidingBaseCoefficient=2.68
 ```
 
 **Thesis Information:**
@@ -77,14 +84,12 @@ SlidingBaseCoefficient=2.68  // Reduced by ~5.5% to maintain balance with Static
 - Important for drift behavior and recovery from slides
 
 **Tuning Guidelines:**
-- Should be proportional to `StaticBaseCoefficient` (typically 0.65-0.75 ratio)
-- **Increase** for more grip during slides (harder to break loose)
-- **Decrease** for less grip during slides (easier to break loose, more progressive)
-- Typical range: 1.5 - 3.5
-
-**Real-World Impact:**
-- Higher values: Tire maintains more grip when sliding, harder to break loose
-- Lower values: Tire slides more easily, more progressive breakaway
+- **Range:** 1.5 - 3.5
+- **Ratio to StaticBaseCoefficient:** Typically 0.65-0.75 (should be proportional)
+- **Increase:** More grip during slides, harder to break loose, tire maintains grip when sliding
+  - **Effect:** More progressive breakaway, better recovery from slides
+- **Decrease:** Less grip during slides, easier to break loose, more progressive slide
+  - **Effect:** Tire slides more easily, more predictable breakaway behavior
 - Affects how the tire recovers from oversteer/understeer situations
 
 ---
@@ -95,9 +100,17 @@ SlidingBaseCoefficient=2.68  // Reduced by ~5.5% to maintain balance with Static
 
 **Format:** `StaticDiffusiveAdhesion=(<min_velocity>, <max_force>, <exponent>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **First value (min_velocity):** 0.001 (fixed, rarely changed)
+- **Second value (max_force):**
+  - **Minimum:** 8000 (low grip on smooth surfaces)
+  - **Typical:** 10000 - 12000 (standard racing tire)
+  - **Maximum:** 15000 (high grip on smooth surfaces)
+- **Third value (exponent):** 0.7 - 0.8 (typically 0.75)
+
+**Example:**
 ```
-StaticDiffusiveAdhesion=(0.001, 11200, 0.75)  // Increased for wider tire
+StaticDiffusiveAdhesion=(0.001, 11200, 0.75)
 ```
 
 **Thesis Information:**
@@ -107,16 +120,20 @@ StaticDiffusiveAdhesion=(0.001, 11200, 0.75)  // Increased for wider tire
 - Higher values increase grip, especially on smooth surfaces
 
 **Tuning Guidelines:**
-- First value: Minimum sliding velocity threshold (typically 0.001)
-- Second value: Maximum adhesion force (typical range: 8000-15000)
-  - **Increase** for more grip on smooth surfaces
-  - **Decrease** for less grip
-- Third value: Exponent (typically 0.7-0.8)
-- For wider tires, increase the second value proportionally
+- **First value:** Minimum sliding velocity threshold (typically 0.001, rarely adjusted)
+- **Second value (max_force):**
+  - **Range:** 8000 - 15000
+  - **Increase:** More grip on smooth surfaces, better low-speed grip, better molecular adhesion
+  - **Decrease:** Less grip on smooth surfaces, more dependent on surface roughness
+  - **For wider tires:** Increase proportionally to tire width
+- **Third value (exponent):**
+  - **Range:** 0.7 - 0.8
+  - **Increase:** More velocity-dependent behavior
+  - **Decrease:** Less velocity-dependent behavior
 
 **Real-World Impact:**
-- Higher values: Better grip on smooth surfaces, better low-speed grip
-- Lower values: Less grip on smooth surfaces, more dependent on surface roughness
+- Higher max_force: Better grip on smooth surfaces, better low-speed grip
+- Lower max_force: Less grip on smooth surfaces, more dependent on surface roughness
 
 ---
 
@@ -126,9 +143,17 @@ StaticDiffusiveAdhesion=(0.001, 11200, 0.75)  // Increased for wider tire
 
 **Format:** `SlidingDiffusiveAdhesion=(<min_velocity>, <max_force>, <exponent>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **First value (min_velocity):** 0.001 (fixed, rarely changed)
+- **Second value (max_force):**
+  - **Minimum:** 1500 (low grip during slides)
+  - **Typical:** 1700 - 2000 (standard racing tire, ~15-20% of StaticDiffusiveAdhesion)
+  - **Maximum:** 2500 (high grip during slides)
+- **Third value (exponent):** 0.7 - 0.8 (typically 0.75)
+
+**Example:**
 ```
-SlidingDiffusiveAdhesion=(0.001, 1900, 0.75)  // Increased for wider tire
+SlidingDiffusiveAdhesion=(0.001, 1900, 0.75)
 ```
 
 **Thesis Information:**
@@ -137,16 +162,19 @@ SlidingDiffusiveAdhesion=(0.001, 1900, 0.75)  // Increased for wider tire
 - Affects grip maintenance during slides
 
 **Tuning Guidelines:**
-- First value: Minimum sliding velocity threshold (typically 0.001)
-- Second value: Maximum adhesion force during sliding (typical range: 1500-2500)
-  - **Increase** for more grip during slides
-  - **Decrease** for less grip during slides
-- Third value: Exponent (typically 0.7-0.8)
-- Should be proportional to `StaticDiffusiveAdhesion`
+- **First value:** Minimum sliding velocity threshold (typically 0.001, rarely adjusted)
+- **Second value (max_force):**
+  - **Range:** 1500 - 2500
+  - **Increase:** More grip during slides, tire maintains grip better when sliding
+  - **Decrease:** Less grip during slides, tire loses grip more quickly when sliding
+  - **Should be proportional:** Typically 15-20% of `StaticDiffusiveAdhesion` value
+- **Third value (exponent):**
+  - **Range:** 0.7 - 0.8
+  - Same as `StaticDiffusiveAdhesion` for consistency
 
 **Real-World Impact:**
-- Higher values: Tire maintains more grip when sliding
-- Lower values: Tire loses grip more quickly when sliding
+- Higher max_force: Tire maintains more grip when sliding, better recovery from slides
+- Lower max_force: Tire loses grip more quickly when sliding, more progressive breakaway
 
 ---
 
@@ -156,9 +184,21 @@ SlidingDiffusiveAdhesion=(0.001, 1900, 0.75)  // Increased for wider tire
 
 **Format:** `StaticCurve=(<temp1_K>, <grip1>, <temp2_K>, <grip2>, <temp3_K>, <grip3>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Temp1 (cold tire):** 273K (0°C) - fixed
+  - **Grip1 range:** 0.3 - 0.7
+  - **Typical:** 0.5 - 0.6 (lower grip when cold)
+- **Temp2 (optimal temp):** 340K - 400K (67°C - 127°C)
+  - **Typical:** 360K - 380K (87°C - 107°C)
+  - **Grip2 range:** 1.0 - 1.2
+  - **Typical:** 1.0 (peak performance)
+- **Temp3 (overheated):** 420K - 450K (147°C - 177°C)
+  - **Grip3 range:** 0.6 - 0.8
+  - **Typical:** 0.7 (reduced grip when overheated)
+
+**Example:**
 ```
-StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Lower peak temp from 378K (105°C) to 360K (87°C) to match target operating temperature range
+StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)
 ```
 
 **Thesis Information:**
@@ -171,23 +211,34 @@ StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Lower peak temp from 378K (105°C
 - Third point: High temperature (overheated) grip multiplier
 
 **Tuning Guidelines:**
-- **Temp1 (K):** Cold tire temperature (typically 273K = 0°C)
-  - Grip multiplier: Typically 0.5-0.7 (lower grip when cold)
-- **Temp2 (K):** Optimal operating temperature (typically 360-380K = 87-107°C)
-  - Grip multiplier: Typically 1.0-1.2 (peak performance)
-  - **This is the most critical value** - sets optimal tire temperature
-- **Temp3 (K):** Overheated temperature (typically 420-450K = 147-177°C)
-  - Grip multiplier: Typically 0.6-0.8 (reduced grip when overheated)
-- **To match real tire data:** Adjust Temp2 to match the tire's optimal operating temperature range
-- **For warm-up training:** Lower the grip multipliers at Temp1 to make cold tires more slippery
+- **Temp1 (K):** Cold tire temperature (typically 273K = 0°C, fixed)
+  - **Grip1:**
+    - **Range:** 0.3 - 0.7
+    - **Increase:** More grip when cold, easier to drive on cold tires (less realistic)
+    - **Decrease:** Less grip when cold, more realistic cold tire behavior, requires proper warm-up
+- **Temp2 (K):** Optimal operating temperature (**most critical value**)
+  - **Range:** 340K - 400K (67°C - 127°C)
+  - **Typical:** 360K - 380K (87°C - 107°C)
+  - **Grip2:**
+    - **Range:** 1.0 - 1.2
+    - **Increase:** Higher peak grip, but may overheat more easily
+    - **Decrease:** Lower peak grip, but more stable
+  - **Increase Temp2:** Tire performs best at higher temperatures (harder to warm up, more resistant to overheating)
+  - **Decrease Temp2:** Tire performs best at lower temperatures (easier to warm up, less resistant to overheating)
+- **Temp3 (K):** Overheated temperature
+  - **Range:** 420K - 450K (147°C - 177°C)
+  - **Grip3:**
+    - **Range:** 0.6 - 0.8
+    - **Increase:** More grip retention when overheated
+    - **Decrease:** Less grip retention when overheated
 
 **Real-World Impact:**
 - Lower Temp2: Tire performs best at lower temperatures (easier to warm up)
 - Higher Temp2: Tire performs best at higher temperatures (harder to warm up, more resistant to overheating)
-- Lower grip at Temp1: More realistic cold tire behavior, requires proper warm-up
-- Higher grip at Temp1: Easier to drive on cold tires (less realistic)
+- Lower Grip1: More realistic cold tire behavior, requires proper warm-up
+- Higher Grip1: Easier to drive on cold tires (less realistic)
 
-**Example Adjustments:**
+**Example Configurations:**
 - **Cold tire behavior:** `(273, 0.3, 373, 1.0, 673, 0.3)` - Very slippery when cold
 - **High temp tire:** `(273, 0.6, 400, 1.2, 450, 0.7)` - Performs best at high temperatures
 - **Low temp tire:** `(273, 0.6, 340, 1.0, 400, 0.7)` - Performs best at lower temperatures
@@ -200,7 +251,7 @@ StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Lower peak temp from 378K (105°C
 
 **Format:** `SlidingAdhesionCurve=(<vel1>, <grip1>, <vel2>, <grip2>, <vel3>, <grip3>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 SlidingAdhesionCurve=(-7.2, 0.4, -4.2, 1.7, -1.2, 0.2)
 ```
@@ -234,7 +285,7 @@ SlidingAdhesionCurve=(-7.2, 0.4, -4.2, 1.7, -1.2, 0.2)
 
 **Format:** `SlidingMicroDeformationCurve=(<vel1>, <grip1>, <vel2>, <grip2>, <vel3>, <grip3>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 SlidingMicroDeformationCurve=(-4.2, 0.3, -1.2, 1.8, +1.5, 0.3)
 ```
@@ -264,7 +315,7 @@ SlidingMicroDeformationCurve=(-4.2, 0.3, -1.2, 1.8, +1.5, 0.3)
 
 **Format:** `SlidingMacroDeformationCurve=(<vel1>, <grip1>, <vel2>, <grip2>, <vel3>, <grip3>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 SlidingMacroDeformationCurve=(-1.2, 0.2, +1.5, 2, +4.0, 0.4)
 ```
@@ -292,9 +343,21 @@ SlidingMacroDeformationCurve=(-1.2, 0.2, +1.5, 2, +4.0, 0.4)
 
 **Format:** `RubberPressureSensitivityPower=(<exponent>, <coefficient1>, <coefficient2>, <power>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **First value (exponent):**
+  - **Range:** -40 to -30
+  - **Typical:** -35 to -38
+- **Second value (coefficient1):**
+  - **Range:** 8e6 - 1.2e7
+  - **Typical:** 9e6 - 1.1e7
+- **Third value (coefficient2):**
+  - **Range:** 4e5 - 6e5
+  - **Typical:** 5e5
+- **Fourth value (power):** 1 (fixed)
+
+**Example:**
 ```
-RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)  // Slightly reduced pressure sensitivity to match target operating pressures
+RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)
 ```
 
 **Thesis Information:**
@@ -304,19 +367,24 @@ RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)  // Slightly reduced pressur
 - Affects how tire responds to load changes
 
 **Tuning Guidelines:**
-- First value: Exponent (typically -30 to -40)
-  - More negative = more sensitive to pressure changes
-- Second value: Primary coefficient (typically 8e6 - 1.2e7)
-  - **Increase** for more grip at higher pressures
-  - **Decrease** for less grip at higher pressures
-- Third value: Offset coefficient (typically 4e5 - 6e5)
-- Fourth value: Power (typically 1)
-- **To reduce pressure sensitivity:** Decrease second value
-- **To increase pressure sensitivity:** Increase second value
+- **First value (exponent):**
+  - **Range:** -40 to -30
+  - **Increase (less negative):** Less sensitive to pressure changes
+  - **Decrease (more negative):** More sensitive to pressure changes
+- **Second value (coefficient1):**
+  - **Range:** 8e6 - 1.2e7
+  - **Increase:** More grip at higher pressures, higher pressure sensitivity
+  - **Decrease:** Less grip at higher pressures, lower pressure sensitivity
+- **Third value (coefficient2):**
+  - **Range:** 4e5 - 6e5
+  - **Typical:** 5e5 (rarely adjusted)
+- **Fourth value (power):** 1 (fixed, rarely changed)
+- **To reduce pressure sensitivity:** Decrease second value or increase first value (less negative)
+- **To increase pressure sensitivity:** Increase second value or decrease first value (more negative)
 
 **Real-World Impact:**
-- Higher sensitivity: Tire grip changes more with pressure variations
-- Lower sensitivity: Tire grip is more stable across pressure range
+- Higher sensitivity: Tire grip changes more with pressure variations, more responsive to load changes
+- Lower sensitivity: Tire grip is more stable across pressure range, less responsive to load changes
 - Must match real tire telemetry data for accurate behavior
 
 ---
@@ -327,7 +395,13 @@ RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)  // Slightly reduced pressur
 
 **Format:** `StaticRoughnessEffect=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Range:** -0.3 to -0.1
+- **Typical:** -0.15 to -0.25
+- **Minimum:** -0.3 (strong roughness effect)
+- **Maximum:** -0.1 (weak roughness effect)
+
+**Example:**
 ```
 StaticRoughnessEffect=-0.2
 ```
@@ -339,11 +413,11 @@ StaticRoughnessEffect=-0.2
 - Affects grip on different track surfaces
 
 **Tuning Guidelines:**
-- Typical range: -0.3 to -0.1
-- **More negative** = rougher surfaces provide significantly more grip
-- **Less negative** = less difference between smooth and rough surfaces
-- **Zero** = no roughness effect
-- **Positive** = smooth surfaces provide more grip (not recommended)
+- **Range:** -0.3 to -0.1
+- **Increase (less negative):** Less difference between smooth and rough surfaces, more uniform grip
+- **Decrease (more negative):** Rougher surfaces provide significantly more grip, better grip on asphalt
+- **Zero:** No roughness effect (not realistic)
+- **Positive:** Smooth surfaces provide more grip (not recommended, unrealistic)
 
 **Real-World Impact:**
 - More negative: Better grip on rough surfaces (asphalt), less on smooth (polished concrete)
@@ -360,9 +434,23 @@ StaticRoughnessEffect=-0.2
 
 **Format:** `BeltSpringX=(<base>, <pressure_mult>, <temp_mult>, <speed_mult>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 1.0e6 - 2.5e6 N/m
+  - **Typical:** 1.5e6 - 2.0e6 N/m
+- **Pressure multiplier:**
+  - **Range:** 1.5 - 2.5
+  - **Typical:** 2.0 - 2.2
+- **Temperature multiplier:**
+  - **Range:** -2000 to -1000 (negative = softer when hot)
+  - **Typical:** -1500 to -1800
+- **Speed multiplier:**
+  - **Range:** 1.0 - 2.0
+  - **Typical:** 1.5 - 1.8
+
+**Example:**
 ```
-BeltSpringX=(1.5e6, 2.1662, -1866.8077, 1.5448)  // Adjusted for 235mm narrower tire construction
+BeltSpringX=(1.5e6, 2.1662, -1866.8077, 1.5448)
 ```
 
 **Thesis Information:**
@@ -373,18 +461,28 @@ BeltSpringX=(1.5e6, 2.1662, -1866.8077, 1.5448)  // Adjusted for 235mm narrower 
 - Directly impacts tire transient response
 
 **Tuning Guidelines:**
-- **Base value:** Primary stiffness (typical range: 1.0e6 - 2.5e6 N/m)
-  - **Increase** for stiffer tire (faster response, less deformation)
-  - **Decrease** for softer tire (slower response, more deformation)
-- **Pressure multiplier:** How stiffness changes with pressure (typically 1.5-2.5)
-- **Temperature multiplier:** How stiffness changes with temperature (typically -1000 to -2000, negative = softer when hot)
-- **Speed multiplier:** How stiffness changes with rotational speed (typically 1.0-2.0)
-- **For narrower tires:** Reduce base value proportionally
-- **For stiffer tire feel:** Increase base value by 10-20%
+- **Base value:**
+  - **Range:** 1.0e6 - 2.5e6 N/m
+  - **Increase:** Stiffer tire longitudinally, faster response to load changes, less tire deformation, more direct feel
+  - **Decrease:** Softer tire longitudinally, slower response, more tire deformation, softer feel
+  - **For narrower tires:** Reduce proportionally to tire width
+  - **For stiffer tire feel:** Increase by 10-20%
+- **Pressure multiplier:**
+  - **Range:** 1.5 - 2.5
+  - **Increase:** Stiffness increases more with pressure
+  - **Decrease:** Stiffness increases less with pressure
+- **Temperature multiplier:**
+  - **Range:** -2000 to -1000 (negative = softer when hot)
+  - **Increase (less negative):** Less temperature sensitivity
+  - **Decrease (more negative):** More temperature sensitivity, tire gets softer more when hot
+- **Speed multiplier:**
+  - **Range:** 1.0 - 2.0
+  - **Increase:** Stiffness increases more with rotational speed
+  - **Decrease:** Stiffness increases less with rotational speed
 
 **Real-World Impact:**
-- Higher values: Faster response to load changes, less tire deformation, more direct feel
-- Lower values: Slower response, more tire deformation, softer feel
+- Higher base: Faster response to load changes, less tire deformation, more direct feel, better braking/acceleration response
+- Lower base: Slower response, more tire deformation, softer feel, more progressive response
 - Critical for matching tire construction characteristics
 
 ---
@@ -395,9 +493,23 @@ BeltSpringX=(1.5e6, 2.1662, -1866.8077, 1.5448)  // Adjusted for 235mm narrower 
 
 **Format:** `BeltSpringZ=(<base>, <pressure_mult>, <temp_mult>, <speed_mult>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 1.5e6 - 3.0e6 N/m
+  - **Typical:** 2.0e6 - 2.5e6 N/m
+- **Pressure multiplier:**
+  - **Range:** 2.0 - 2.5
+  - **Typical:** 2.2 - 2.4
+- **Temperature multiplier:**
+  - **Range:** -2000 to -1500 (negative = softer when hot)
+  - **Typical:** -1500 to -1800
+- **Speed multiplier:**
+  - **Range:** -0.01 to 0.2 (can be negative)
+  - **Typical:** -0.01 to 0.1
+
+**Example:**
 ```
-BeltSpringZ=(2.42e6, 2.3551, -1565.643, -0.0148)  // Adjusted for 235mm narrower tire construction
+BeltSpringZ=(2.42e6, 2.3551, -1565.643, -0.0148)
 ```
 
 **Thesis Information:**
@@ -407,18 +519,28 @@ BeltSpringZ=(2.42e6, 2.3551, -1565.643, -0.0148)  // Adjusted for 235mm narrower
 - Less critical than BeltSpringX for handling feel
 
 **Tuning Guidelines:**
-- **Base value:** Primary stiffness (typical range: 1.5e6 - 3.0e6 N/m)
-  - **Increase** for stiffer tire vertically
-  - **Decrease** for softer tire vertically
-- **Pressure multiplier:** Typically 2.0-2.5
-- **Temperature multiplier:** Typically -1500 to -2000
-- **Speed multiplier:** Can be negative (typically -0.01 to 0.2)
-- **For narrower tires:** Reduce base value proportionally
-- **For softer ride:** Decrease base value by 10-15%
+- **Base value:**
+  - **Range:** 1.5e6 - 3.0e6 N/m
+  - **Increase:** Stiffer tire vertically, less vertical deformation, stiffer ride, smaller contact patch
+  - **Decrease:** Softer tire vertically, more vertical deformation, softer ride, larger contact patch
+  - **For narrower tires:** Reduce proportionally to tire width
+  - **For softer ride:** Decrease by 10-15%
+- **Pressure multiplier:**
+  - **Range:** 2.0 - 2.5
+  - **Increase:** Vertical stiffness increases more with pressure
+  - **Decrease:** Vertical stiffness increases less with pressure
+- **Temperature multiplier:**
+  - **Range:** -2000 to -1500
+  - **Increase (less negative):** Less temperature sensitivity
+  - **Decrease (more negative):** More temperature sensitivity
+- **Speed multiplier:**
+  - **Range:** -0.01 to 0.2
+  - **Increase:** Stiffness increases more with speed (or decreases less if negative)
+  - **Decrease:** Stiffness increases less with speed
 
 **Real-World Impact:**
-- Higher values: Less vertical deformation, stiffer ride, smaller contact patch
-- Lower values: More vertical deformation, softer ride, larger contact patch
+- Higher base: Less vertical deformation, stiffer ride, smaller contact patch, better response to bumps
+- Lower base: More vertical deformation, softer ride, larger contact patch, more compliant over bumps and curbs
 - Affects how tire responds to bumps and curbs
 
 ---
@@ -429,7 +551,21 @@ BeltSpringZ=(2.42e6, 2.3551, -1565.643, -0.0148)  // Adjusted for 235mm narrower
 
 **Format:** `TreadSpringXPerUnitArea=(<base>, <pressure_mult>, <temp_mult>, <speed_mult>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 6e8 - 1.2e9 N/m²
+  - **Typical:** 7e8 - 1.0e9 N/m²
+- **Pressure multiplier:**
+  - **Range:** 10 - 15
+  - **Typical:** 11 - 13
+- **Temperature multiplier:**
+  - **Range:** -1.5e6 to -1.0e6 (negative = softer when hot)
+  - **Typical:** -1.1e6 to -1.3e6
+- **Speed multiplier:**
+  - **Range:** -5000 to -3000 (negative)
+  - **Typical:** -3500 to -4500
+
+**Example:**
 ```
 TreadSpringXPerUnitArea=(7.5e8, 11.1643, -1.2084e6, -3948.7844)
 ```
@@ -442,18 +578,28 @@ TreadSpringXPerUnitArea=(7.5e8, 11.1643, -1.2084e6, -3948.7844)
 - Per unit area means it scales with contact patch size
 
 **Tuning Guidelines:**
-- **Base value:** Primary stiffness (typical range: 6e8 - 1.2e9 N/m²)
-  - **Increase** for stiffer tread (faster response, more direct)
-  - **Decrease** for softer tread (slower response, more progressive)
-- **Pressure multiplier:** Typically 10-15
-- **Temperature multiplier:** Typically -1.0e6 to -1.5e6 (negative = softer when hot)
-- **Speed multiplier:** Can be negative (typically -3000 to -5000)
-- **For more responsive tire:** Increase base value by 10-20%
-- **For softer tire:** Decrease base value by 10-20%
+- **Base value:**
+  - **Range:** 6e8 - 1.2e9 N/m²
+  - **Increase:** Stiffer tread longitudinally, faster response to steering/braking inputs, more direct feel, less tire "squish"
+  - **Decrease:** Softer tread longitudinally, slower response, more progressive feel, more tire deformation
+  - **For more responsive tire:** Increase by 10-20%
+  - **For softer tire:** Decrease by 10-20%
+- **Pressure multiplier:**
+  - **Range:** 10 - 15
+  - **Increase:** Tread stiffness increases more with pressure
+  - **Decrease:** Tread stiffness increases less with pressure
+- **Temperature multiplier:**
+  - **Range:** -1.5e6 to -1.0e6
+  - **Increase (less negative):** Less temperature sensitivity
+  - **Decrease (more negative):** More temperature sensitivity, tread gets softer more when hot
+- **Speed multiplier:**
+  - **Range:** -5000 to -3000
+  - **Increase (less negative):** Stiffness decreases less with speed
+  - **Decrease (more negative):** Stiffness decreases more with speed
 
 **Real-World Impact:**
-- Higher values: Faster response to steering/braking inputs, more direct feel, less tire "squish"
-- Lower values: Slower response, more progressive feel, more tire deformation
+- Higher base: Faster response to steering/braking inputs, more direct feel, less tire "squish", better transient response
+- Lower base: Slower response, more progressive feel, more tire deformation, softer compound feel
 - Critical for matching tire compound characteristics
 
 ---
@@ -464,7 +610,21 @@ TreadSpringXPerUnitArea=(7.5e8, 11.1643, -1.2084e6, -3948.7844)
 
 **Format:** `TreadSpringZPerUnitArea=(<base>, <pressure_mult>, <temp_mult>, <speed_mult>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 8e8 - 1.5e9 N/m²
+  - **Typical:** 1.0e9 - 1.2e9 N/m²
+- **Pressure multiplier:**
+  - **Range:** -400 to -300 (negative)
+  - **Typical:** -350 to -380
+- **Temperature multiplier:**
+  - **Range:** -1.3e6 to -1.0e6 (negative = softer when hot)
+  - **Typical:** -1.1e6 to -1.2e6
+- **Speed multiplier:**
+  - **Range:** -500 to -400 (negative)
+  - **Typical:** -450 to -480
+
+**Example:**
 ```
 TreadSpringZPerUnitArea=(1.141e9, -354.4055, -1.1741e6, -451.2509)
 ```
@@ -476,18 +636,26 @@ TreadSpringZPerUnitArea=(1.141e9, -354.4055, -1.1741e6, -451.2509)
 - Less critical than TreadSpringX for handling feel
 
 **Tuning Guidelines:**
-- **Base value:** Primary stiffness (typical range: 8e8 - 1.5e9 N/m²)
-  - **Increase** for stiffer tread vertically
-  - **Decrease** for softer tread vertically
-- **Pressure multiplier:** Can be negative (typically -300 to -400)
-- **Temperature multiplier:** Typically -1.0e6 to -1.3e6
-- **Speed multiplier:** Typically -400 to -500
-- **For stiffer tread:** Increase base value
-- **For softer tread:** Decrease base value
+- **Base value:**
+  - **Range:** 8e8 - 1.5e9 N/m²
+  - **Increase:** Stiffer tread vertically, less tread deformation, more uniform pressure distribution
+  - **Decrease:** Softer tread vertically, more tread deformation, more pressure concentration
+- **Pressure multiplier:**
+  - **Range:** -400 to -300 (negative)
+  - **Increase (less negative):** Stiffness decreases less with pressure
+  - **Decrease (more negative):** Stiffness decreases more with pressure
+- **Temperature multiplier:**
+  - **Range:** -1.3e6 to -1.0e6
+  - **Increase (less negative):** Less temperature sensitivity
+  - **Decrease (more negative):** More temperature sensitivity
+- **Speed multiplier:**
+  - **Range:** -500 to -400
+  - **Increase (less negative):** Stiffness decreases less with speed
+  - **Decrease (more negative):** Stiffness decreases more with speed
 
 **Real-World Impact:**
-- Higher values: Less tread deformation, more uniform pressure distribution
-- Lower values: More tread deformation, more pressure concentration
+- Higher base: Less tread deformation, more uniform pressure distribution, better grip on smooth surfaces
+- Lower base: More tread deformation, more pressure concentration, better grip on rough surfaces
 - Affects grip on rough surfaces
 
 ---
@@ -498,9 +666,18 @@ TreadSpringZPerUnitArea=(1.141e9, -354.4055, -1.1741e6, -451.2509)
 
 **Format:** `RingStiffnessMultiplier=(<radial>, <lateral>, <longitudinal>, <torsional>, <bending1>, <bending2>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Radial (first value):**
+  - **Range:** 0.8 - 1.2
+  - **Typical:** 0.9 - 1.0
+- **Lateral (second value):** 1.0 (typically fixed)
+- **Longitudinal (third value):** 1.0 (typically fixed)
+- **Torsional (fourth value):** 1.0 (typically fixed)
+- **Bending (fifth/sixth values):** 1.0 (typically fixed)
+
+**Example:**
 ```
-RingStiffnessMultiplier=(0.90, 1, 1, 1, 1, 1)  // Reduced radial stiffness by 10% for softer feel
+RingStiffnessMultiplier=(0.90, 1, 1, 1, 1, 1)
 ```
 
 **Thesis Information:**
@@ -510,15 +687,16 @@ RingStiffnessMultiplier=(0.90, 1, 1, 1, 1, 1)  // Reduced radial stiffness by 10
 - First value (radial) is most commonly adjusted
 
 **Tuning Guidelines:**
-- **Radial (first value):** Vertical stiffness (typical range: 0.8-1.2)
-  - **Decrease** for softer tire (more deformation, better compliance)
-  - **Increase** for stiffer tire (less deformation, faster response)
-- **Lateral (second value):** Side-to-side stiffness (typically 1.0)
-- **Longitudinal (third value):** Fore-aft stiffness (typically 1.0)
-- **Torsional (fourth value):** Twist stiffness (typically 1.0)
-- **Bending (fifth/sixth values):** Bending stiffness (typically 1.0)
-- **For softer tire:** Reduce first value by 5-10%
-- **For stiffer tire:** Increase first value by 5-10%
+- **Radial (first value):**
+  - **Range:** 0.8 - 1.2
+  - **Decrease:** Softer tire, more deformation, better compliance, better ride quality, less responsive
+  - **Increase:** Stiffer tire, less deformation, faster response, harsher ride, more responsive
+  - **For softer tire:** Reduce by 5-10%
+  - **For stiffer tire:** Increase by 5-10%
+- **Lateral (second value):** Side-to-side stiffness (typically 1.0, rarely adjusted)
+- **Longitudinal (third value):** Fore-aft stiffness (typically 1.0, rarely adjusted)
+- **Torsional (fourth value):** Twist stiffness (typically 1.0, rarely adjusted)
+- **Bending (fifth/sixth values):** Bending stiffness (typically 1.0, rarely adjusted)
 
 **Real-World Impact:**
 - Lower radial value: Softer tire, more compliant, better ride quality, less responsive
@@ -533,7 +711,13 @@ RingStiffnessMultiplier=(0.90, 1, 1, 1, 1, 1)  // Reduced radial stiffness by 10
 
 **Format:** `LoadVsDeflectionMultiplier=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Range:** 0.85 - 1.15
+- **Typical:** 1.0 (standard behavior)
+- **Minimum:** 0.85 (stiffer, less deflection)
+- **Maximum:** 1.15 (softer, more deflection)
+
+**Example:**
 ```
 LoadVsDeflectionMultiplier=1
 ```
@@ -545,15 +729,15 @@ LoadVsDeflectionMultiplier=1
 - Values > 1.0 = more deflection for given load (softer)
 
 **Tuning Guidelines:**
-- Typical range: 0.85 - 1.15
-- **Decrease** for stiffer tire (less deflection)
-- **Increase** for softer tire (more deflection)
+- **Range:** 0.85 - 1.15
+- **Decrease:** Stiffer tire, less deflection for given load, tire deflects less under load, stiffer feel
+- **Increase:** Softer tire, more deflection for given load, tire deflects more under load, softer feel
 - **For load sensitivity tuning:** Adjust in 0.05 increments
 - Less commonly adjusted than other stiffness parameters
 
 **Real-World Impact:**
-- Lower values: Tire deflects less under load, stiffer feel
-- Higher values: Tire deflects more under load, softer feel
+- Lower values: Tire deflects less under load, stiffer feel, less load sensitivity
+- Higher values: Tire deflects more under load, softer feel, more load sensitivity
 - Affects how tire responds to weight transfer
 
 ---
@@ -566,9 +750,20 @@ LoadVsDeflectionMultiplier=1
 
 **Format:** `DampingHeatEnergy=(<adhesion>, <sliding>, <hysteresis>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **First value (adhesion):**
+  - **Range:** 0.3 - 0.5
+  - **Typical:** 0.35 - 0.45
+- **Second value (sliding):**
+  - **Range:** 0.15 - 0.25
+  - **Typical:** 0.18 - 0.22
+- **Third value (hysteresis):**
+  - **Range:** 0.4 - 0.6
+  - **Typical:** 0.45 - 0.55
+
+**Example:**
 ```
-DampingHeatEnergy=(0.3, 0.18, 0.45)  // Reduced by ~25% to lower overall heat generation
+DampingHeatEnergy=(0.3, 0.18, 0.45)
 ```
 
 **Thesis Information:**
@@ -579,16 +774,26 @@ DampingHeatEnergy=(0.3, 0.18, 0.45)  // Reduced by ~25% to lower overall heat ge
 - Critical for matching real tire temperature profiles
 
 **Tuning Guidelines:**
+- **First value (adhesion):**
+  - **Range:** 0.3 - 0.5
+  - **Increase:** More heat from adhesion zone, higher tire temperatures
+  - **Decrease:** Less heat from adhesion zone, lower tire temperatures
+- **Second value (sliding):**
+  - **Range:** 0.15 - 0.25
+  - **Increase:** More heat from sliding zone, higher tire temperatures during slides
+  - **Decrease:** Less heat from sliding zone, lower tire temperatures during slides
+- **Third value (hysteresis):**
+  - **Range:** 0.4 - 0.6
+  - **Increase:** More heat from hysteresis, higher tire temperatures
+  - **Decrease:** Less heat from hysteresis, lower tire temperatures
 - **To reduce heat generation:** Decrease all values by 20-30%
 - **To increase heat generation:** Increase all values by 20-30%
-- **For cooler tires:** Reduce values (e.g., 0.3, 0.18, 0.45)
-- **For hotter tires:** Increase values (e.g., 0.5, 0.25, 0.6)
+- **All three values should be adjusted proportionally**
 - **To match telemetry:** Adjust based on measured tire temperatures
-- All three values should be adjusted proportionally
 
 **Real-World Impact:**
-- Lower values: Less heat generation, cooler tires, less thermal degradation
-- Higher values: More heat generation, hotter tires, more thermal degradation
+- Lower values: Less heat generation, cooler tires, less thermal degradation, slower warm-up
+- Higher values: More heat generation, hotter tires, more thermal degradation, faster warm-up
 - Critical for matching real tire temperature behavior from telemetry
 
 ---
@@ -599,9 +804,20 @@ DampingHeatEnergy=(0.3, 0.18, 0.45)  // Reduced by ~25% to lower overall heat ge
 
 **Format:** `InternalGasHeatTransfer=(<base>, <speed_mult>, <exponent>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 4 - 8
+  - **Typical:** 5 - 7
+- **Speed multiplier:**
+  - **Range:** 4 - 6
+  - **Typical:** 5
+- **Exponent:**
+  - **Range:** 0.6 - 0.7
+  - **Typical:** 0.65
+
+**Example:**
 ```
-InternalGasHeatTransfer=(6, 5, 0.65)  // Increased to improve internal heat distribution
+InternalGasHeatTransfer=(6, 5, 0.65)
 ```
 
 **Thesis Information:**
@@ -611,18 +827,24 @@ InternalGasHeatTransfer=(6, 5, 0.65)  // Increased to improve internal heat dist
 - Critical for matching real tire temperature distribution (inner vs outer edge)
 
 **Tuning Guidelines:**
-- **Base value:** Primary transfer rate (typical range: 4-8)
-  - **Increase** for better internal heat distribution
-  - **Decrease** for less internal heat distribution
-- **Speed multiplier:** How transfer changes with speed (typically 4-6)
-- **Exponent:** Typically 0.6-0.7
-- **To improve heat distribution:** Increase base value by 20-50%
-- **To create hot spots:** Decrease base value
+- **Base value:**
+  - **Range:** 4 - 8
+  - **Increase:** Better internal heat distribution, more uniform tire temperatures, less hot spots
+  - **Decrease:** Less internal heat distribution, more temperature variation across tire, potential hot spots
+  - **To improve heat distribution:** Increase by 20-50%
+- **Speed multiplier:**
+  - **Range:** 4 - 6
+  - **Increase:** Heat transfer increases more with speed
+  - **Decrease:** Heat transfer increases less with speed
+- **Exponent:**
+  - **Range:** 0.6 - 0.7
+  - **Increase:** More speed-dependent behavior
+  - **Decrease:** Less speed-dependent behavior
 
 **Real-World Impact:**
-- Higher values: More uniform tire temperatures, less hot spots, better heat distribution
-- Lower values: More temperature variation across tire, potential hot spots
-- Critical for matching real tire inner/outer temperature differences
+- Higher base: More uniform tire temperatures, less hot spots, better heat distribution, matches inner/outer temp differences
+- Lower base: More temperature variation across tire, potential hot spots, less uniform distribution
+- Critical for matching real tire inner/outer temperature differences from telemetry
 
 ---
 
@@ -632,9 +854,21 @@ InternalGasHeatTransfer=(6, 5, 0.65)  // Increased to improve internal heat dist
 
 **Format:** `ExternalGasHeatTransfer=(<base>, <speed_mult>, <exponent>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 4 - 8
+  - **Typical:** 5 - 7
+  - **Open-wheel cars:** 6 - 8 (more airflow)
+- **Speed multiplier:**
+  - **Range:** 4 - 6
+  - **Typical:** 5
+- **Exponent:**
+  - **Range:** 0.6 - 0.7
+  - **Typical:** 0.65
+
+**Example:**
 ```
-ExternalGasHeatTransfer=(6.5, 5.0, 0.65)  // Increased base cooling by ~44% to reduce outer edge temps
+ExternalGasHeatTransfer=(6.5, 5.0, 0.65)
 ```
 
 **Thesis Information:**
@@ -645,19 +879,23 @@ ExternalGasHeatTransfer=(6.5, 5.0, 0.65)  // Increased base cooling by ~44% to r
 - For open-wheel cars, values are typically higher (more airflow)
 
 **Tuning Guidelines:**
-- **Base value:** Primary cooling rate (typical range: 4-8)
-  - **Increase** for more cooling (cooler tires)
-  - **Decrease** for less cooling (hotter tires)
-- **Speed multiplier:** How cooling changes with speed (typically 4-6)
-  - Higher values = more cooling at speed (important for straights)
-- **Exponent:** Typically 0.6-0.7
-  - Higher values = cooling increases more with speed
-- **To reduce outer edge temps:** Increase base value by 30-50%
-- **To match telemetry:** Adjust based on measured cooling rates on straights
+- **Base value:**
+  - **Range:** 4 - 8
+  - **Increase:** More cooling, cooler tires, especially at speed, cooler tires on straights, faster temperature drop
+  - **Decrease:** Less cooling, hotter tires, slower temperature drop on straights
+  - **To reduce outer edge temps:** Increase by 30-50%
+- **Speed multiplier:**
+  - **Range:** 4 - 6
+  - **Increase:** More cooling at speed (important for straights), cooling increases more with speed
+  - **Decrease:** Less cooling at speed, cooling increases less with speed
+- **Exponent:**
+  - **Range:** 0.6 - 0.7
+  - **Increase:** Cooling increases more with speed
+  - **Decrease:** Cooling increases less with speed
 
 **Real-World Impact:**
-- Higher values: More cooling, especially at speed, cooler tires on straights
-- Lower values: Less cooling, hotter tires, slower temperature drop on straights
+- Higher base: More cooling, especially at speed, cooler tires on straights, faster temperature drop, better matches telemetry
+- Lower base: Less cooling, hotter tires, slower temperature drop on straights
 - Critical for matching real tire temperature profiles from telemetry
 
 ---
@@ -668,9 +906,18 @@ ExternalGasHeatTransfer=(6.5, 5.0, 0.65)  // Increased base cooling by ~44% to r
 
 **Format:** `GroundConductance=(<base>, <pressure_mult>, <offset>)`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Base value:**
+  - **Range:** 600 - 1200
+  - **Typical:** 700 - 900
+- **Pressure multiplier:**
+  - **Range:** 0.015 - 0.030
+  - **Typical:** 0.020 - 0.025
+- **Offset:** 0 (typically fixed)
+
+**Example:**
 ```
-GroundConductance=(800, 0.025, 0)  // Increased base conductance by ~26% to cool outer edge
+GroundConductance=(800, 0.025, 0)
 ```
 
 **Thesis Information:**
@@ -681,19 +928,21 @@ GroundConductance=(800, 0.025, 0)  // Increased base conductance by ~26% to cool
 - The second value multiplies contact pressure (higher pressure = more heat transfer)
 
 **Tuning Guidelines:**
-- **Base value:** Primary conductance (typical range: 600-1200)
-  - **Increase** for more heat loss to track (cooler surface temps)
-  - **Decrease** for less heat loss to track (hotter surface temps)
-- **Pressure multiplier:** How conductance changes with pressure (typical range: 0.015-0.030)
-  - **Increase** for more pressure-dependent cooling
-  - **Decrease** for less pressure-dependent cooling
-- **To reduce surface temps:** Increase base value by 20-30%
-- **To match telemetry:** Adjust based on measured surface temperatures
+- **Base value:**
+  - **Range:** 600 - 1200
+  - **Increase:** More heat loss to track, cooler tire surface, better cooling in contact patch
+  - **Decrease:** Less heat loss to track, hotter tire surface, less cooling
+  - **To reduce surface temps:** Increase by 20-30%
+- **Pressure multiplier:**
+  - **Range:** 0.015 - 0.030
+  - **Increase:** More pressure-dependent cooling, higher pressure = more heat transfer
+  - **Decrease:** Less pressure-dependent cooling, less variation with pressure
+- **Offset:** Typically 0 (rarely adjusted)
 
 **Real-World Impact:**
-- Higher values: More heat lost to track, cooler tire surface, better cooling in contact patch
-- Lower values: Less heat lost to track, hotter tire surface, less cooling
-- Critical for matching real tire surface temperature measurements
+- Higher base: More heat lost to track, cooler tire surface, better cooling in contact patch, matches surface temp measurements
+- Lower base: Less heat lost to track, hotter tire surface, less cooling
+- Critical for matching real tire surface temperature measurements from telemetry
 
 ---
 
@@ -703,7 +952,7 @@ GroundConductance=(800, 0.025, 0)  // Increased base conductance by ~26% to cool
 
 **Format:** `ThermalDepthAtSurface=<value>`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 ThermalDepthAtSurface=0.0001
 ```
@@ -722,7 +971,7 @@ ThermalDepthAtSurface=0.0001
 
 **Format:** `ThermalDepthBelowSurface=<value>`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 ThermalDepthBelowSurface=0.0004
 ```
@@ -742,7 +991,13 @@ ThermalDepthBelowSurface=0.0004
 
 **Format:** `LateralDistributionMultiplier=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Range:** 0.7 - 1.0
+- **Typical:** 0.75 - 0.85
+- **Minimum:** 0.7 (very even distribution)
+- **Maximum:** 1.0 (standard distribution)
+
+**Example:**
 ```
 LateralDistributionMultiplier=0.755
 ```
@@ -754,15 +1009,15 @@ LateralDistributionMultiplier=0.755
 - Lower values help distribute heat laterally (prevent outer edge overheating)
 
 **Tuning Guidelines:**
-- Typical range: 0.7 - 1.0
-- **Decrease** for more even lateral force distribution (prevents hot spots)
-- **Increase** for more concentrated force distribution
+- **Range:** 0.7 - 1.0
+- **Decrease:** More even lateral force distribution, prevents hot spots, more even heat distribution, less outer edge overheating, better for preventing rollover
+- **Increase:** More concentrated force distribution, potential hot spots, can contribute to rollover
 - **For rollover prevention:** Reduce to 0.75-0.80
 - **For hot spot prevention:** Reduce to 0.70-0.75
 
 **Real-World Impact:**
-- Lower values: More even heat distribution, less outer edge overheating, better for preventing rollover
-- Higher values: More concentrated forces, potential hot spots, can contribute to rollover
+- Lower values: More even heat distribution, less outer edge overheating, better for preventing rollover, more stable tire
+- Higher values: More concentrated forces, potential hot spots, can contribute to rollover, less stable tire
 - Critical parameter for tire stability
 
 ---
@@ -773,7 +1028,7 @@ LateralDistributionMultiplier=0.755
 
 **Format:** `LongitudinalDistributionMultiplier=<value>`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 LongitudinalDistributionMultiplier=0.535
 ```
@@ -796,7 +1051,7 @@ LongitudinalDistributionMultiplier=0.535
 
 **Format:** `SizeMultiplier=(<width_mult>, <diameter_mult>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 SizeMultiplier=(0.938, 0.992)  // Adjusted for 235mm width vs 250mm baseline
 ```
@@ -820,7 +1075,7 @@ SizeMultiplier=(0.938, 0.992)  // Adjusted for 235mm width vs 250mm baseline
 
 **Format:** `MassInertiaMultiplier=(<mass>, <inertia_x>, <inertia_y>, <inertia_z>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 MassInertiaMultiplier=(1, 1, 1, 1)
 ```
@@ -840,7 +1095,7 @@ MassInertiaMultiplier=(1, 1, 1, 1)
 
 **Format:** `AbrasionVolumePerUnitEnergy=(<value1>, <value2>, ..., <value32>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 AbrasionVolumePerUnitEnergy=(3.26E-10,2.76e-10,2.31e-10,2.01e-10,1.74e-10,1.51e-10,1.27e-10,1.06e-10,8.71e-11,6.85e-11,5.43e-11,4.45e-11,3.6e-11,3.14e-11,2.94e-11,2.86e-11,2.91e-11,3.03e-11,3.23e-11,3.51e-11,3.94e-11,4.57e-11,5.23e-11,5.91e-11,6.65e-11,7.85e-11,9.42e-11,1.17e-10,1.51e-10,1.97e-10,2.28e-10,2.57e-10)
 ```
@@ -865,7 +1120,7 @@ AbrasionVolumePerUnitEnergy=(3.26E-10,2.76e-10,2.31e-10,2.01e-10,1.74e-10,1.51e-
 
 **Format:** `DegradationPerWearFraction=(<value1>, <value2>, ..., <value32>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 DegradationPerWearFraction=(0.99,1,0.999,0.9976,0.9966,0.9957,0.9949,0.9942,0.9936,0.993,0.9925,0.992,0.9915,0.991,0.9905,0.99,0.9895,0.989,0.9885,0.988,0.9875,0.987,0.9865,0.986,0.9855,0.985,0.9845,0.984,0.9834,0.982,0.96,0.84)
 ```
@@ -884,7 +1139,7 @@ DegradationPerWearFraction=(0.99,1,0.999,0.9976,0.9966,0.9957,0.9949,0.9942,0.99
 
 **Format:** `DegradationCurveParameters=(<param1>, <param2>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 DegradationCurveParameters=(342.65, 6978.125)
 ```
@@ -901,7 +1156,7 @@ DegradationCurveParameters=(342.65, 6978.125)
 
 **Format:** `DegradationPerUnitHistory=(<value1>, <value2>, ..., <value32>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 DegradationPerUnitHistory=(1,0.98,0.968,0.96,0.956,0.9535,0.9512,0.949,0.9469,0.9449,0.943,0.9411,0.9392,0.9373,0.9354,0.9335,0.9316,0.9297,0.9278,0.9259,0.924,0.9221,0.9202,0.9183,0.9164,0.9144,0.9122,0.9096,0.9064,0.902,0.896,0.89)
 ```
@@ -921,16 +1176,19 @@ DegradationPerUnitHistory=(1,0.98,0.968,0.96,0.956,0.9535,0.9512,0.949,0.9469,0.
 
 **Format:** `TerrainWeightOnContactTemperature=<value>`
 
-**Example from Hybrid Tire:**
+**Typical Values:**
+- **Range:** 0.0 - 0.2
+- **Typical:** 0.05 - 0.1
+
+**Example:**
 ```
-TerrainWeightOnContactTemperature=0.05  // 0.1 before
+TerrainWeightOnContactTemperature=0.05
 ```
 
 **Tuning Guidelines:**
-- Typical range: 0.0 - 0.2
-- **Increase** for more track temperature influence
-- **Decrease** for less track temperature influence
-- Lower values = tire temperature less affected by track temperature
+- **Range:** 0.0 - 0.2
+- **Increase:** More track temperature influence, tire temperature more affected by hot/cold track
+- **Decrease:** Less track temperature influence, tire temperature less affected by track temperature
 
 **Real-World Impact:**
 - Higher values: Tire temperature more affected by hot/cold track
@@ -944,7 +1202,7 @@ TerrainWeightOnContactTemperature=0.05  // 0.1 before
 
 **Format:** `TerrainEffect=(<min_grip>, <max_grip>, <multiplier>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 DryTerrainEffect=(0,1,1)
 WetTerrainEffect=(0,1,0.5)
@@ -968,7 +1226,7 @@ SpecialTerrainEffect=(0,1,1)
 
 **Format:** `GrooveEffects=(<value1>, <value2>, <value3>, <value4>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 GrooveEffects=(0.083, 0.083, 0.068, 0.041)
 ```
@@ -985,7 +1243,7 @@ GrooveEffects=(0.083, 0.083, 0.068, 0.041)
 
 **Format:** `DampnessEffects=(<value1>, <value2>, <value3>, <value4>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 DampnessEffects=(-0.25, -0.4, -0.25, -0.1)
 ```
@@ -1003,7 +1261,7 @@ DampnessEffects=(-0.25, -0.4, -0.25, -0.1)
 
 **Format:** `TemporaryGripLossForWetness=<value>`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 TemporaryGripLossForWetness=0.22
 ```
@@ -1023,7 +1281,7 @@ TemporaryGripLossForWetness=0.22
 
 **Format:** `InternalGasMolarMass=<value>`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 InternalGasMolarMass=0.028884
 ```
@@ -1041,7 +1299,7 @@ InternalGasMolarMass=0.028884
 
 **Format:** `InternalGasSpecificHeatAtConstantVolume=(<temp_K>, <specific_heat>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 InternalGasSpecificHeatAtConstantVolume=(250,720.7)
 InternalGasSpecificHeatAtConstantVolume=(300,722.9)
@@ -1064,7 +1322,7 @@ InternalGasSpecificHeatAtConstantVolume=(500,752.4)
 
 **Format:** `GaugePressureExtrapolationRange=(<min_Pa>, <max_Pa>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 GaugePressureExtrapolationRange=(0,270000)
 ```
@@ -1082,7 +1340,7 @@ GaugePressureExtrapolationRange=(0,270000)
 
 **Format:** `CarcassTemperatureExtrapolationRange=(<min_K>, <max_K>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 CarcassTemperatureExtrapolationRange=(268.15,423.15)
 ```
@@ -1100,7 +1358,7 @@ CarcassTemperatureExtrapolationRange=(268.15,423.15)
 
 **Format:** `RotationSquaredExtrapolationRange=(<min>, <max>)`
 
-**Example from Hybrid Tire:**
+**Example:**
 ```
 RotationSquaredExtrapolationRange=(0,47000)
 ```
@@ -1156,18 +1414,20 @@ RotationSquaredExtrapolationRange=(0,47000)
 
 #### Matching Real Tire Telemetry (Example)
 
-Based on actual tuning work to match real tire telemetry data:
+Example parameter set for matching real tire telemetry data:
 
 ```
-StaticBaseCoefficient=3.75          // Reduced by ~6%
-SlidingBaseCoefficient=2.68         // Reduced by ~5.5%
+StaticBaseCoefficient=3.75
+SlidingBaseCoefficient=2.68
 StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Peak at 360K (87°C)
-DampingHeatEnergy=(0.3, 0.18, 0.45)  // Reduced by ~25%
-InternalGasHeatTransfer=(6, 5, 0.65)  // Increased
-ExternalGasHeatTransfer=(6.5, 5.0, 0.65)  // Increased by ~44%
-GroundConductance=(800, 0.025, 0)   // Increased by ~26%
-RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)  // Reduced
+DampingHeatEnergy=(0.3, 0.18, 0.45)
+InternalGasHeatTransfer=(6, 5, 0.65)
+ExternalGasHeatTransfer=(6.5, 5.0, 0.65)
+GroundConductance=(800, 0.025, 0)
+RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)
 ```
+
+**Note:** These values represent a typical configuration. Adjust based on your specific tire telemetry data and requirements.
 
 ### Testing Procedure
 
