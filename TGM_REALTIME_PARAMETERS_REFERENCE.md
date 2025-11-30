@@ -1419,7 +1419,7 @@ Example parameter set for matching real tire telemetry data:
 ```
 StaticBaseCoefficient=3.75
 SlidingBaseCoefficient=2.68
-StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Peak at 360K (87°C)
+StaticCurve=(273, 0.6, 360, 1.0, 420, 0.7)  // Peak at 360K (87°C), slicks are usually peaking around 100-120°C range. 
 DampingHeatEnergy=(0.3, 0.18, 0.45)
 InternalGasHeatTransfer=(6, 5, 0.65)
 ExternalGasHeatTransfer=(6.5, 5.0, 0.65)
