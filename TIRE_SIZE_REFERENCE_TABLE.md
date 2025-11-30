@@ -28,6 +28,7 @@ This table provides key parameter values for common racing tire sizes. These val
 | **305/45R15**  | (1.220, 0.720) | 3.8 | 2.85 | 24000 | 7000 | 0.78 | 0.48 | 2.19e6 | 2.87e6 | (273, 0.65, 378, 1.0, 428, 0.7) | (-35, 1.13e7, 5e5, 1) | ⚠️ Estimated |
 | **415/40R15**  | (1.660, 0.640) | 3.95 | 3.0 | 26000 | 8000 | 0.75 | 0.46 | 2.59e6 | 3.39e6 | (273, 0.65, 378, 1.0, 428, 0.7) | (-35, 1.13e7, 5e5, 1) | ⚠️ Estimated |
 
+
 ## Parameter Notes
 
 ### SizeMultiplier
