@@ -1,7 +1,7 @@
 # rFactor 2 Tire Development Knowledge Base by Community
 ## Copyrights and usage of the code
 https://docs.studio-397.com/display/DG/Tyre+Database
-Parts of this mod were taken from rFactor 2 and are used with the explicit permission of Studio 397. These parts remain the property of Studio 397 BV and may not be re-used for any purpose, including other mods without the explicit, written permission of Studio 397 BV. 
+Parts of the info were taken from rFactor 2. These parts remain the property of Studio 397 BV and may not be re-used for any purpose, including other mods without the explicit, written permission of Studio 397 BV. 
 
 
 ## Overview
