@@ -630,7 +630,7 @@ TreadSpringZPerUnitArea=(1.141e9, -354.4055, -1.1741e6, -451.2509)
 ```
 
 **Thesis Information:**
-- Controls tread block stiffness in vertical direction
+- Controls tread block stiffness in the vertical direction
 - Higher values = stiffer tread vertically
 - Affects contact patch pressure distribution
 - Less critical than TreadSpringX for handling feel
@@ -1187,12 +1187,12 @@ TerrainWeightOnContactTemperature=0.05
 
 **Tuning Guidelines:**
 - **Range:** 0.0 - 0.2
-- **Increase:** More track temperature influence, tire temperature more affected by hot/cold track
-- **Decrease:** Less track temperature influence, tire temperature less affected by track temperature
+- **Increase:** More track temperature influence, tire temperature is more affected by the hot/cold track
+- **Decrease:** Less track temperature influence, tire temperature is less affected by track temperature
 
 **Real-World Impact:**
-- Higher values: Tire temperature more affected by hot/cold track
-- Lower values: Tire temperature less affected by track temperature
+- Higher values: Tire temperature is more affected by a hot/cold track
+- Lower values: Tire temperature is less affected by track temperature
 
 ---
 
@@ -1295,7 +1295,7 @@ InternalGasMolarMass=0.028884
 
 ### InternalGasSpecificHeatAtConstantVolume
 
-**Purpose:** Defines specific heat capacity of internal gas at different temperatures.
+**Purpose:** Defines the specific heat capacity of internal gas at different temperatures.
 
 **Format:** `InternalGasSpecificHeatAtConstantVolume=(<temp_K>, <specific_heat>)`
 
@@ -1312,7 +1312,7 @@ InternalGasSpecificHeatAtConstantVolume=(500,752.4)
 **Tuning Guidelines:**
 - Multiple entries define temperature-dependent specific heat
 - Typically left at default values (air properties)
-- Only adjust if using different gas (e.g., nitrogen)
+- Only adjust if using a different gas (e.g., nitrogen)
 
 ---
 
@@ -1329,8 +1329,8 @@ GaugePressureExtrapolationRange=(0,270000)
 
 **Tuning Guidelines:**
 - Defines valid pressure range (0 to 270000 Pa = 0 to 2.7 bar)
-- Adjust if tire operates outside this range
-- Typically left at default
+- Adjust if the tire operates outside this range
+- Typically left at the default
 
 ---
 
@@ -1347,8 +1347,8 @@ CarcassTemperatureExtrapolationRange=(268.15,423.15)
 
 **Tuning Guidelines:**
 - Defines valid temperature range (268.15K = -5°C to 423.15K = 150°C)
-- Adjust if tire operates outside this range
-- Typically left at default
+- Adjust if the tire operates outside this range
+- Typically left at the default
 
 ---
 
@@ -1366,7 +1366,7 @@ RotationSquaredExtrapolationRange=(0,47000)
 **Tuning Guidelines:**
 - Defines valid rotational speed range
 - Adjust if tire operates outside this range
-- Typically left at default
+- Typically left at the default
 
 ---
 
@@ -1395,7 +1395,7 @@ RotationSquaredExtrapolationRange=(0,47000)
    - Adjust `DampingHeatEnergy` to match heat generation
    - Adjust `ExternalGasHeatTransfer` to match cooling rates
    - Adjust `GroundConductance` to match surface temperatures
-   - Adjust `InternalGasHeatTransfer` to match temperature distribution
+   - Adjust `InternalGasHeatTransfer` to match the temperature distribution
 
 2. **Grip matching:**
    - Adjust `StaticBaseCoefficient` and `SlidingBaseCoefficient` to match friction coefficients
@@ -1409,7 +1409,7 @@ RotationSquaredExtrapolationRange=(0,47000)
 #### Reducing Rollover Issues
 
 1. **Reduce `LateralDistributionMultiplier`** to 0.75-0.80
-2. **Reduce stiffness parameters** by 5-10% if tire feels too stiff
+2. **Reduce stiffness parameters** by 5-10% if the tire feels too stiff
 3. **Check `StaticBaseCoefficient`** - may be too high
 
 #### Matching Real Tire Telemetry (Example)
@@ -1475,10 +1475,9 @@ RubberPressureSensitivityPower=(-35, 9.5e6, 5e5, 1)
 
 - University Thesis: "Optimisation of the tyre model in rFactor2 environment for AVEHIL professional simulator" (2018/2019)
 - rFactor2 TGM Tyre Tool Quick Start Guide
-- Practical tire development experience with DUN-235-610R17_Hybrid.tgm
 
 ---
 
 **Document Version:** 1.0  
-**Last Updated:** Based on Hybrid tire development and real tire telemetry matching work
+**Last Updated:** Based on real tire telemetry matching work
 
