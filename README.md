@@ -393,12 +393,7 @@ This knowledge base contains professional tire development methodology, paramete
 - **Comparative analysis:** vs default tires, vs real experience
 
 ### Development Ethics:
-- **NDA compliance:** All professional agreements respected
-- **Public domain focus:** Use only publicly available information
-- **Methodology sharing:** Share HOW to develop, not proprietary WHAT
-- **Community benefit:** Knowledge should benefit entire sim racing community
-- **Professional respect:** Racing teams' competitive advantages protected
-
+- **NDA compliance:** All professional agreements are respected and are not shared here.
 ---
 
 
